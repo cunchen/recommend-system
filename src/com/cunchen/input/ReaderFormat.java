@@ -55,14 +55,35 @@ public class ReaderFormat {
 				row.add(basicBean.getString(1));
 				continue;
 			}
-			binarySerch(formLists, row);
+			int pointer = binarySerch(formLists, row);
+			if(pointer == -1) {
+				row = new HabitsBean(basicBean.getInt(0));
+			} else {
+				row = formLists.get(pointer);
+			}
+			row.add(basicBean.getString(1));
 		}
 		return null;
 	}
 	
 	//binary serch
 	private int binarySerch(List<HabitsBean> lists, HabitsBean bean) {
-		return 0;
+		int start = 0;
+		int end = lists.size();
+		int pointer = (start + end) / 2;
+		HabitsBean row = null;
+		while(pointer > start && pointer < end) {
+			row = lists.get(pointer);
+			if(row.getId() == bean.getId()) {
+				return row.getId();
+			} else if(row.getId() > bean.getId()) {
+				end = pointer;
+			} else if(row.getId() < bean.getId()) {
+				start = pointer;
+			}
+			pointer = (start + end + 1) / 2;
+		}
+		return -1;
 	}
 	
 	

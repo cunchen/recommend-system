@@ -18,9 +18,13 @@ public class HabitsBean extends BasicBean {
 		this.id = id;
 	}
 	
+	public HabitsBean() {
+		this(-1);
+	}
+	
 	//default id is -1,it means the id hadn't been evaluated
-	public HabitsBean(int n) {
-		this(-1, n);
+	public HabitsBean(int id) {
+		this(id, 5);
 	}
 	
 	public HabitsBean(int id, int n) {
