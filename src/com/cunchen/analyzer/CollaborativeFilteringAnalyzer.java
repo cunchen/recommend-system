@@ -2,7 +2,9 @@ package com.cunchen.analyzer;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.cunchen.bean.BasicBean;
 import com.cunchen.input.ReaderFormat;
@@ -15,14 +17,11 @@ import com.cunchen.input.ReaderFormat;
 public class CollaborativeFilteringAnalyzer extends Analyzer {
 	
 	public float userSimilarityConsine(List<?> lists) {
-		BasicBean basicBeanA = null;
-		BasicBean basicBeanB = null;
-		System.out.println(((BasicBean)lists.get(lists.size()-1)).getInt(1));
+		Set<String> setsCommon = new HashSet<String>();
+//		System.out.println(((BasicBean)lists.get(lists.size()-1)).getInt(1));
 		List parameters = new ArrayList();
 		for (int i = 0; i < lists.size(); i++) {
 			for (int j = i + 1; j < lists.size(); j++) {
-				basicBeanA = (BasicBean) lists.get(i);
-				basicBeanB = (BasicBean) lists.get(j);
 				
 			}
 		}
