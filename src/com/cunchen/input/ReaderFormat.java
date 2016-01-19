@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.cunchen.bean.BasicBean;
+import com.cunchen.bean.HabitsBean;
 
 /**
  * This class for reading training and test files.It can 
@@ -17,7 +18,7 @@ import com.cunchen.bean.BasicBean;
  */
 public class ReaderFormat {
 	List<BasicBean> lists;
-	List<BasicBean> formLists;
+	List<HabitsBean> formLists;
 	
 	public List<BasicBean> read (String filePath) throws IOException {
 		@SuppressWarnings("resource")
@@ -41,20 +42,27 @@ public class ReaderFormat {
 	}
 	
 	//combine user log like | userID | habitID | ...
-	//to | habitID1 | habitID2 | habitID3 | ... , userID is replaced by index placement 
+	//to userID and | habitID1 | habitID2 | habitID3 | ...
 	public List<BasicBean> formateLogUser(String filePath) throws IOException {
 		lists = this.read(filePath);
 		int size = ((BasicBean)lists.get(lists.size()-1)).getInt(0);
-		formLists = new ArrayList<BasicBean>(size);
-		StringBuilder row = null;
+		formLists = new LinkedList<HabitsBean>();
+		HabitsBean row = null;
 		for (BasicBean basicBean : lists) {
-			if(formLists.get(basicBean.getInt(0)) == null) {
-				row = new StringBuilder(basicBean.getString(1));
-			} else {
-				row = row.append(basicBean.getString(1));
+			if(formLists.size() == 0) {
+				row = new HabitsBean(1);
+				row.setId(basicBean.getInt(0));
+				row.add(basicBean.getString(1));
+				continue;
 			}
+			binarySerch(formLists, row);
 		}
 		return null;
+	}
+	
+	//binary serch
+	private int binarySerch(List<HabitsBean> lists, HabitsBean bean) {
+		return 0;
 	}
 	
 	
