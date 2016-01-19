@@ -43,9 +43,8 @@ public class ReaderFormat {
 	
 	//combine user log like | userID | habitID | ...
 	//to userID and | habitID1 | habitID2 | habitID3 | ...
-	public List<BasicBean> formateLogUser(String filePath) throws IOException {
+	public List<HabitsBean> formateLogUser(String filePath) throws IOException {
 		lists = this.read(filePath);
-		int size = ((BasicBean)lists.get(lists.size()-1)).getInt(0);
 		formLists = new LinkedList<HabitsBean>();
 		HabitsBean row = null;
 		for (BasicBean basicBean : lists) {
@@ -53,37 +52,43 @@ public class ReaderFormat {
 				row = new HabitsBean(1);
 				row.setId(basicBean.getInt(0));
 				row.add(basicBean.getString(1));
-				continue;
-			}
-			int pointer = binarySerch(formLists, row);
-			if(pointer == -1) {
-				row = new HabitsBean(basicBean.getInt(0));
+				formLists.add(row);
 			} else {
-				row = formLists.get(pointer);
+				this.addBinarySerch(formLists, basicBean);
 			}
-			row.add(basicBean.getString(1));
 		}
-		return null;
+		return formLists;
 	}
 	
 	//binary serch
-	private int binarySerch(List<HabitsBean> lists, HabitsBean bean) {
+	private void addBinarySerch(List<HabitsBean> lists, BasicBean bean) {
 		int start = 0;
-		int end = lists.size();
-		int pointer = (start + end) / 2;
-		HabitsBean row = null;
-		while(pointer > start && pointer < end) {
-			row = lists.get(pointer);
+		int end = lists.size()-1;
+		int pointer = (start + end + 1) / 2;
+		HabitsBean row = lists.get(pointer);
+		while(start <= end) {
 			if(row.getId() == bean.getId()) {
-				return row.getId();
-			} else if(row.getId() > bean.getId()) {
+				row.add(bean.getString(1));
+				lists.set(pointer, row);
+				return ;
+			} else if(start == end) {
+				break;
+			}else if(row.getId() > bean.getId()) {
+			
 				end = pointer;
 			} else if(row.getId() < bean.getId()) {
 				start = pointer;
 			}
 			pointer = (start + end + 1) / 2;
+			row = lists.get(pointer);
 		}
-		return -1;
+		if(row.getId() < bean.getId()) {
+			pointer++;
+		}
+		HabitsBean newBean = new HabitsBean(bean.getId());
+		newBean.add(bean.getString(1));
+		lists.add(newBean);
+		return ;
 	}
 	
 	
@@ -91,8 +96,10 @@ public class ReaderFormat {
 	public static void main(String[] args) {
 		ReaderFormat readerFormat = new ReaderFormat();
 		try {
-			readerFormat.read("E:/WorkSpace/Input/ml-100k/u1.base");
-			
+			List<HabitsBean> lists = readerFormat.formateLogUser("E:/WorkSpace/Input/ml-100k/u1.base");
+			for (HabitsBean habitsBean : lists) {
+				System.out.println(habitsBean.toString());
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

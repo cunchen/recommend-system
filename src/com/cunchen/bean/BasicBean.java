@@ -68,9 +68,26 @@ public class BasicBean {
 		return tableHead;
 	}
 	
+	//Override toString()
+	public String toString() {
+		StringBuilder str = new StringBuilder(" ");
+		int len = 1;
+		for (String string : parameters) {
+			str.append("\t|" + string);
+			if(len++ % 20 == 0)
+				str.append("\n");
+		}
+		return str.toString();
+	}
+	
 	//Get number of parameters
 	public int getNum() {
 		return num;
+	}
+	
+	//Get ID of a set
+	public int getId() {
+		return this.getInt(0);
 	}
 	
 	public String getString(int index) {

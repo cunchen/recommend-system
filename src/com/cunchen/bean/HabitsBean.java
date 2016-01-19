@@ -31,4 +31,11 @@ public class HabitsBean extends BasicBean {
 		super(n);
 		this.id = id;
 	}
+	
+	//Override Object toString() method
+	public String toString() {
+		StringBuilder str = new StringBuilder("HabitBean " + this.id + " :");
+		str.append(super.toString());
+		return str.toString();
+	}
 }
