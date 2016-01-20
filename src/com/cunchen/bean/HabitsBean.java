@@ -1,5 +1,6 @@
 package com.cunchen.bean;
 
+
 /**
  * 
  * @author wqd
@@ -28,7 +29,7 @@ public class HabitsBean extends BasicBean {
 	}
 	
 	public HabitsBean(int id, int n) {
-		super(n);
+		super(false);
 		this.id = id;
 	}
 	
@@ -38,4 +39,5 @@ public class HabitsBean extends BasicBean {
 		str.append(super.toString());
 		return str.toString();
 	}
+	
 }

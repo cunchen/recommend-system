@@ -10,23 +10,22 @@ import java.util.List;
  */
 public class BasicBean {
 	private List<String> parameters;
-	private int num;
+//	private int num;
 	private boolean tableHead;
 
 	//Default constructor,the row set 5 floders and it isn't a table head
-	protected BasicBean() {
-		this(5);
-	}
+//	protected BasicBean() {
+//		this(5);
+//	}
 	
-	///Default constructor,the row set n floders and it isn't a table head
-	public BasicBean(int n) {
-		this(false, 5);
-	}
+//	///Default constructor,the row set n floders and it isn't a table head
+//	public BasicBean(int n) {
+//		this(false, 5);
+//	}
 	
 	///Default constructor,the row set n floders and is or not a table head
-	public BasicBean(boolean head, int n) {
+	public BasicBean(boolean head) {
 		parameters = new ArrayList<String>();
-		this.num = n;
 		this.tableHead = head;
 	}
 	
@@ -43,19 +42,19 @@ public class BasicBean {
 		for(String string : strings) {
 			parameters.add(string);
 		}
-		this.num = parameters.size();
+//		this.num = parameters.size();
 		this.tableHead = head;
 	}
 	
 	public int add(String param) {
 		parameters.add(param);
-		return ++num;
+		return this.getSize();
 	}
 	
 	//replace a parameter value pointed to a new value
 	//If success,return true.If not,return false.
 	public boolean set(int index, String param) {
-		if(index < num)
+		if(index < this.getSize())
 			parameters.set(index, param);
 		else
 			return false;
@@ -81,8 +80,13 @@ public class BasicBean {
 	}
 	
 	//Get number of parameters
-	public int getNum() {
-		return num;
+	public int getSize() {
+		return parameters.size();
+	}
+	
+	//Get array
+	public List<String> getArray() {
+		return this.parameters;
 	}
 	
 	//Get ID of a set

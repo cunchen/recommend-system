@@ -82,9 +82,6 @@ public class ReaderFormat {
 			pointer = (start + end + 1) / 2;
 			row = lists.get(pointer);
 		}
-		if(row.getId() < bean.getId()) {
-			pointer++;
-		}
 		HabitsBean newBean = new HabitsBean(bean.getId());
 		newBean.add(bean.getString(1));
 		lists.add(newBean);
